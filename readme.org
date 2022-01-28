@@ -1,0 +1,28 @@
+** Requirements
+#+begin_src sh
+brew install eye-d3
+brew install sox
+pip install mutagen
+#+end_src
+
+** Create noise profile
+#+begin_src sh
+sox noise.wav -n noiseprof noise.prof
+#+end_src
+
+** Process a single file
+#+begin_src sh
+./remove-noise.sh <relative-path/filename>
+# the result will be in clean/relative-path/filename
+#+end_src
+
+** Process a whole directory
+#+begin_src sh
+find <directory> -iname '*.mp3' -exec ./remove-noise.sh "{}" \;
+#+end_src
+
+** Set common ID3 tags
+- see [[https://mutagen.readthedocs.io/en/latest/man/mid3v2.html][mid3v2 docs]] for options
+#+begin_src sh
+find <directory> -iname '*.mp3' -exec eyeD3 -a "Artist" -A "Album" "{}" \;
+#+end_src
